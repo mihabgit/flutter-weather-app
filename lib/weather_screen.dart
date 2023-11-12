@@ -164,15 +164,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       final hourlyForecast = data['list'][index + 1];
                       final hourlySky =
                           data['list'][index + 1]['weather'][0]['main'];
-                      final hourlyTemp =
-                          hourlyForecast['main']['temp'].toString();
+                      final hourlyTemp = hourlyForecast['main']['temp'];
                       final time = DateTime.parse(hourlyForecast['dt_txt']);
+                      final hourlyTempInCelcius =
+                          double.parse((hourlyTemp - 273.15).toString())
+                              .toStringAsFixed(2);
                       return HourlyForecastItem(
                         time: DateFormat.j().format(time),
                         icon: hourlySky == 'Clouds' || hourlySky == 'Rain'
                             ? Icons.cloud
                             : Icons.sunny,
-                        temp: hourlyTemp,
+                        temp: '$hourlyTempInCelcius °C',
                       );
                     },
                   ),
